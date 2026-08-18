@@ -13,7 +13,6 @@
 
 <img src="assets/settings-card.png" width="480" alt="設定頁卡片（十款預設色 + 自訂）">
 
-> 截圖後請放入 `assets/` 資料夾，檔名對應上述兩張圖即可自動顯示。
 
 ## 功能
 
