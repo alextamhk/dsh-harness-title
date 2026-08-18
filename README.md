@@ -7,6 +7,14 @@
 （由 Host 端注入 base value），可在 **Settings 設定頁** 修改文字、文字顏色、背景色、
 字體大小（10–72px）、顯示位置，並持久化到 `~/.dsh/settings.yaml`（每台機器各自一份）。
 
+## 效果預覽
+
+<img src="assets/title-badge.png" width="320" alt="右上角標題效果">
+
+<img src="assets/settings-card.png" width="480" alt="設定頁卡片（十款預設色 + 自訂）">
+
+> 截圖後請放入 `assets/` 資料夾，檔名對應上述兩張圖即可自動顯示。
+
 ## 功能
 
 - 四種顯示位置：New Session 按鈕上方（預設）／右上角／左上角／頂部居中
