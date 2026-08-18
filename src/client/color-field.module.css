@@ -1,0 +1,68 @@
+/* Color swatch row for the harness-title settings card. */
+
+.swatches {
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.swatch {
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--dsw-alias-border-l2);
+  cursor: pointer;
+  position: relative;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  display: inline-flex;
+  background-clip: padding-box;
+}
+
+.swatch:hover:not(:disabled) {
+  border-color: var(--dsw-alias-label-dimmed);
+}
+
+.swatch:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.swatchSelected {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: 2px;
+}
+
+/* Checkerboard so "transparent" reads as transparency. */
+.swatchTransparent {
+  background: repeating-conic-gradient(#80808059 0% 25%, transparent 0% 50%) 0 0 / 12px 12px;
+}
+
+.swatchCheck {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.6);
+}
+
+/* The Custom option: dashed outline, ellipsis glyph. */
+.swatchCustom {
+  border-style: dashed;
+  background: var(--dsw-alias-bg-layer-3);
+}
+
+.swatchCustom.swatchSelected {
+  border-style: solid;
+}
+
+.customIcon {
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}

@@ -1,0 +1,53 @@
+/* The harness-title badge: a fixed name plate over the whole frame. */
+
+.badge {
+  /* Click-through: the shell overlay layer re-enables pointer events on its
+     direct children, so the badge must opt back out to never block the
+     New Session button or any other control underneath. */
+  pointer-events: none;
+  user-select: none;
+  position: fixed;
+  top: 8px;
+  z-index: 30;
+  max-width: min(60vw, 480px);
+  box-sizing: border-box;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  font-family: var(--dsw-alias-font-family, inherit);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.18);
+  /* Keeps the text legible when the user leaves the background transparent. */
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.35);
+}
+
+.badge[data-position='above-new-session'] {
+  /* Aligned with the sidebar content origin (the 60px logo row sits above
+     the New Session button); narrower than the corner positions so a long
+     title cannot stretch over the conversation column. */
+  left: 12px;
+  max-width: 200px;
+}
+
+.badge[data-position='top-right'] {
+  right: 12px;
+}
+
+.badge[data-position='top-left'] {
+  left: 12px;
+}
+
+.badge[data-position='top-center'] {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* While the sidebar is collapsed to the rail there is no New Session button
+   row to sit above — hide the anchored position (corner positions stay). */
+[data-sidebar-collapsed] .badge[data-position='above-new-session'] {
+  display: none;
+}
