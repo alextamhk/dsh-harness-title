@@ -15,6 +15,20 @@ export declare const FONT_SIZE_MIN = 10;
 export declare const FONT_SIZE_MAX = 72;
 /** Default display font size in px. */
 export declare const FONT_SIZE_DEFAULT = 22;
+/** Default workspace-name font size in px (smaller than the title). */
+export declare const WORKSPACE_FONT_SIZE_DEFAULT = 20;
+/** Workspace-name placements relative to the title text. */
+export declare const WORKSPACE_POSITIONS: readonly ["left", "right", "below"];
+/** One workspace-name placement key. */
+export type WorkspacePosition = (typeof WORKSPACE_POSITIONS)[number];
+/** The default placement (right of the title, like `TITLE [workspace]`). */
+export declare const WORKSPACE_POSITION_DEFAULT: WorkspacePosition;
+/** Workspace-name sources: follow the current DSH workspace, or a fixed manual text. */
+export declare const WORKSPACE_MODES: readonly ["auto", "manual"];
+/** One workspace-name source key. */
+export type WorkspaceMode = (typeof WORKSPACE_MODES)[number];
+/** The default source: follow the current workspace. */
+export declare const WORKSPACE_MODE_DEFAULT: WorkspaceMode;
 /** Display positions; `above-new-session` is the user-approved default. */
 export declare const POSITIONS: readonly ["above-new-session", "top-right", "top-left", "top-center"];
 /** One display position key. */
@@ -44,6 +58,16 @@ export interface TitleSettings {
     fontSize?: number;
     /** Display position. */
     position?: TitlePosition;
+    /** Workspace-name switch; off hides the bracketed workspace part. */
+    workspaceEnabled?: boolean;
+    /** Workspace-name source: auto (current workspace) or manual (workspaceText). */
+    workspaceMode?: WorkspaceMode;
+    /** Workspace name text (used by the manual source); empty string hides the bracketed part. */
+    workspaceText?: string;
+    /** Workspace-name font size in px, 10–72 (independent of fontSize). */
+    workspaceFontSize?: number;
+    /** Workspace-name placement relative to the title: left / right / below. */
+    workspacePosition?: WorkspacePosition;
 }
 /** Schemastery schema for the namespace (defaults resolve empty user layers). */
 export declare const TitleSettingsSchema: z<Schemastery.ObjectS<{
@@ -53,6 +77,11 @@ export declare const TitleSettingsSchema: z<Schemastery.ObjectS<{
     backgroundColor: z<string, string>;
     fontSize: z<number, number>;
     position: z<"above-new-session" | "top-right" | "top-left" | "top-center", "above-new-session" | "top-right" | "top-left" | "top-center">;
+    workspaceEnabled: z<boolean, boolean>;
+    workspaceMode: z<"auto" | "manual", "auto" | "manual">;
+    workspaceText: z<string, string>;
+    workspaceFontSize: z<number, number>;
+    workspacePosition: z<"left" | "right" | "below", "left" | "right" | "below">;
 }>, Schemastery.ObjectT<{
     enabled: z<boolean, boolean>;
     text: z<string, string>;
@@ -60,5 +89,10 @@ export declare const TitleSettingsSchema: z<Schemastery.ObjectS<{
     backgroundColor: z<string, string>;
     fontSize: z<number, number>;
     position: z<"above-new-session" | "top-right" | "top-left" | "top-center", "above-new-session" | "top-right" | "top-left" | "top-center">;
+    workspaceEnabled: z<boolean, boolean>;
+    workspaceMode: z<"auto" | "manual", "auto" | "manual">;
+    workspaceText: z<string, string>;
+    workspaceFontSize: z<number, number>;
+    workspacePosition: z<"left" | "right" | "below", "left" | "right" | "below">;
 }>>;
 //# sourceMappingURL=settings.d.ts.map

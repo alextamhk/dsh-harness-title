@@ -15,7 +15,7 @@ import type {} from '@deepseek-ai/dsh-client-ui-settings/client'
 import { PluginSettingsCard, ValueField, BooleanField, ChoiceField } from './PluginSettingsCard.tsx'
 import { ColorField } from './ColorField.tsx'
 import { CardForm, booleanField, choiceField, textField, type CardActions, type CardShell, type FieldSpec, type FieldState as CardFieldState } from './settings-form.ts'
-import { COLOR_PRESETS, FONT_SIZE_MAX, FONT_SIZE_MIN, POSITION_CHOICES, type TitlePosition, type TitleSettings } from './settings.ts'
+import { COLOR_PRESETS, FONT_SIZE_MAX, FONT_SIZE_MIN, POSITION_CHOICES, WORKSPACE_MODE_CHOICES, WORKSPACE_POSITION_CHOICES, type TitlePosition, type TitleSettings, type WorkspaceMode, type WorkspacePosition } from './settings.ts'
 import type { TitleKey } from './locales.ts'
 import sectionCss from './settings-section.module.css'
 
@@ -25,6 +25,19 @@ const POSITION_LABEL_KEYS: Record<TitlePosition, TitleKey> = {
   'top-right': 'settings.position.topRight',
   'top-left': 'settings.position.topLeft',
   'top-center': 'settings.position.topCenter',
+}
+
+/** Locale key of each workspace placement's label. */
+const WORKSPACE_POSITION_LABEL_KEYS: Record<WorkspacePosition, TitleKey> = {
+  left: 'settings.workspacePosition.left',
+  right: 'settings.workspacePosition.right',
+  below: 'settings.workspacePosition.below',
+}
+
+/** Locale key of each workspace-name source's label. */
+const WORKSPACE_MODE_LABEL_KEYS: Record<WorkspaceMode, TitleKey> = {
+  auto: 'settings.workspaceMode.auto',
+  manual: 'settings.workspaceMode.manual',
 }
 
 /** The namespace's fields this card edits. */
@@ -44,6 +57,16 @@ export interface TitleSettingsCardState extends CardShell {
   fontSize: CardFieldState
   /** Display position. */
   position: CardFieldState
+  /** Workspace-name switch. */
+  workspaceEnabled: CardFieldState
+  /** Workspace-name source (auto / manual). */
+  workspaceMode: CardFieldState
+  /** Workspace name text. */
+  workspaceText: CardFieldState
+  /** Workspace-name font size px. */
+  workspaceFontSize: CardFieldState
+  /** Workspace-name placement (left / right / below the title). */
+  workspacePosition: CardFieldState
 }
 
 /** The registration-side face the card's slot entry injects. */
@@ -108,6 +131,11 @@ export class TitleSettingsCardController {
       colorField('backgroundColor'),
       boundedNumberField('fontSize', FONT_SIZE_MIN, FONT_SIZE_MAX),
       choiceField('position', POSITION_CHOICES),
+      booleanField('workspaceEnabled'),
+      choiceField('workspaceMode', WORKSPACE_MODE_CHOICES),
+      textField('workspaceText'),
+      boundedNumberField('workspaceFontSize', FONT_SIZE_MIN, FONT_SIZE_MAX),
+      choiceField('workspacePosition', WORKSPACE_POSITION_CHOICES),
     ])
     this.store = this.form.bind(() => this.projection())
   }
@@ -121,6 +149,11 @@ export class TitleSettingsCardController {
       backgroundColor: this.form.field('backgroundColor'),
       fontSize: this.form.field('fontSize'),
       position: this.form.field('position'),
+      workspaceEnabled: this.form.field('workspaceEnabled'),
+      workspaceMode: this.form.field('workspaceMode'),
+      workspaceText: this.form.field('workspaceText'),
+      workspaceFontSize: this.form.field('workspaceFontSize'),
+      workspacePosition: this.form.field('workspacePosition'),
     }
   }
 
@@ -162,6 +195,8 @@ export function TitleSettingsCard(props: TitleSettingsCardProps) {
     disabled,
   }
   const positionChoices = POSITION_CHOICES.map(position => ({ value: position, label: t(POSITION_LABEL_KEYS[position]) }))
+  const workspacePositionChoices = WORKSPACE_POSITION_CHOICES.map(position => ({ value: position, label: t(WORKSPACE_POSITION_LABEL_KEYS[position]) }))
+  const workspaceModeChoices = WORKSPACE_MODE_CHOICES.map(mode => ({ value: mode, label: t(WORKSPACE_MODE_LABEL_KEYS[mode]) }))
   return (
     <PluginSettingsCard
       t={t}
@@ -239,6 +274,59 @@ export function TitleSettingsCard(props: TitleSettingsCardProps) {
         choices={positionChoices}
         onEdit={(text) => { props.edit('position', text) }}
         onReset={() => { props.resetField('position') }}
+      />
+      <BooleanField
+        id="settings-harness-title-workspace-enabled"
+        label={t('settings.workspaceEnabled')}
+        hint={t('settings.workspaceEnabledHint')}
+        inheritLabel={t('settings.inherit')}
+        onLabel={t('settings.on')}
+        offLabel={t('settings.off')}
+        {...fieldProps}
+        {...state.workspaceEnabled}
+        onEdit={(text) => { props.edit('workspaceEnabled', text) }}
+        onReset={() => { props.resetField('workspaceEnabled') }}
+      />
+      <ChoiceField
+        id="settings-harness-title-workspace-mode"
+        label={t('settings.workspaceMode')}
+        hint={t('settings.workspaceModeHint')}
+        inheritLabel={t('settings.inherit')}
+        {...fieldProps}
+        {...state.workspaceMode}
+        choices={workspaceModeChoices}
+        onEdit={(text) => { props.edit('workspaceMode', text) }}
+        onReset={() => { props.resetField('workspaceMode') }}
+      />
+      <ValueField
+        id="settings-harness-title-workspace-text"
+        label={t('settings.workspaceText')}
+        hint={t('settings.workspaceTextHint')}
+        {...fieldProps}
+        {...state.workspaceText}
+        onEdit={(text) => { props.edit('workspaceText', text) }}
+        onReset={() => { props.resetField('workspaceText') }}
+      />
+      <ValueField
+        id="settings-harness-title-workspace-font-size"
+        label={t('settings.workspaceFontSize')}
+        hint={t('settings.workspaceFontSizeHint')}
+        numeric
+        {...fieldProps}
+        {...state.workspaceFontSize}
+        onEdit={(text) => { props.edit('workspaceFontSize', text) }}
+        onReset={() => { props.resetField('workspaceFontSize') }}
+      />
+      <ChoiceField
+        id="settings-harness-title-workspace-position"
+        label={t('settings.workspacePosition')}
+        hint={t('settings.workspacePositionHint')}
+        inheritLabel={t('settings.inherit')}
+        {...fieldProps}
+        {...state.workspacePosition}
+        choices={workspacePositionChoices}
+        onEdit={(text) => { props.edit('workspacePosition', text) }}
+        onReset={() => { props.resetField('workspacePosition') }}
       />
     </PluginSettingsCard>
   )

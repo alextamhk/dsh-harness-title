@@ -7,6 +7,11 @@
 （由 Host 端注入 base value），可在 **Settings 設定頁** 修改文字、文字顏色、背景色、
 字體大小（10–72px）、顯示位置，並持久化到 `~/.dsh/settings.yaml`（每台機器各自一份）。
 
+除了標題文字，還可附加顯示**工作區名稱**（例如 `DESKTOP-ALEX [harness-title]`）：
+獨立開關、獨立字體大小，並可放在標題文字的左側／右側／下方。
+工作區名稱**預設為「自動」模式**：跟隨目前 workspace 的名稱，切換 session／workspace 時即時更新；
+也可切換為「手動」輸入固定文字。
+
 ## 效果預覽
 
 <img src="assets/title-badge.png" width="1280" alt="右上角標題效果">
@@ -20,6 +25,15 @@
 - 文字顏色、背景色支援任意 CSS 色值（含 `var(--dsw-*)` 主題變數）
 - 字體大小 10–72px
 - 總開關（關閉即隱藏）
+- 工作區名稱（方括號顯示，如 `DESKTOP-ALEX [harness-title]`）：
+  - 獨立開關（不影響標題）
+  - 獨立字體大小（10–72px，預設 20）
+  - 三種位置：標題左側／標題右側（預設）／標題下方
+  - 名稱來源二選一：
+    - **自動（預設）**：跟隨目前 workspace 的名稱（目前 session 所屬 workspace 的 title；
+      未分組 session 退回其 cwd 目錄名；無目前 session 時用最近啟用的 workspace），
+      切換 session／workspace 時即時更新
+    - **手動**：固定顯示設定頁輸入的文字（預設為 Host 工作目錄名稱）
 - 設定即時生效（儲存後 badge 立即更新，無需重新整理）
 - 不阻擋任何 UI 操作（badge `pointer-events: none`）
 - 側欄收起成 rail 時，「New Session 按鈕上方」位置自動隱藏
@@ -30,6 +44,9 @@
 
 ```bash
 # 在 profile 目錄（~/.dsh/profiles/web）執行
+# 方式一：從 GitHub 安裝（推薦）
+dsh plugin --profile web add github:alextamhk/dsh-harness-title
+# 方式二：本機開發連結
 dsh plugin --profile web add link:C:/Users/AlexTam/Projects/ai/deepseek-harness/Plugin/harness-title
 ```
 
@@ -57,6 +74,11 @@ Settings 側欄 → **Harness 標題** 頁：
 | 背景色 | 十款預設色 + 「自訂」輸入任意 CSS 色值或主題變數 | `var(--dsw-alias-bg-layer-3)` |
 | 字體大小（px） | 10–72 | 22 |
 | 顯示位置 | 四選一 | New Session 按鈕上方 |
+| 啟用工作區名稱 | 獨立開關 | 開 |
+| 工作區名稱來源 | 自動（目前 workspace）／手動輸入 | 自動 |
+| 工作區名稱（手動） | 方括號內文字；僅「手動輸入」來源使用；留空隱藏 | 工作目錄名稱 |
+| 工作區字體大小（px） | 10–72，獨立於標題字體 | 20 |
+| 工作區名稱位置 | 標題左側／標題右側／標題下方 | 標題右側 |
 
 十款預設色：主題文字色、主題底色、透明、近白、近黑、紅、黃、淺綠、淺藍、粉紅。
 
@@ -70,6 +92,11 @@ harness-title:
   backgroundColor: 'rgba(0, 0, 0, 0.45)'
   fontSize: 28
   position: top-right   # above-new-session | top-right | top-left | top-center
+  workspaceEnabled: true
+  workspaceMode: auto   # auto（目前 workspace，預設）| manual（使用 workspaceText）
+  workspaceText: '我的專案'   # 僅 manual 模式使用；留空隱藏
+  workspaceFontSize: 20
+  workspacePosition: right   # left | right | below
 ```
 
 ## 開發

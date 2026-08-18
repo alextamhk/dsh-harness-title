@@ -8,10 +8,10 @@
  * @module harness-title/client/settings
  */
 
-import type { TitlePosition, TitleSettings } from '../settings.ts'
+import type { TitlePosition, TitleSettings, WorkspaceMode, WorkspacePosition } from '../settings.ts'
 import type { TitleKey } from './locales.ts'
 
-export type { TitlePosition, TitleSettings }
+export type { TitlePosition, TitleSettings, WorkspaceMode, WorkspacePosition }
 
 /** Settings namespace bound by the client scope (host registers it). */
 export const TITLE_NS = 'harness-title'
@@ -28,7 +28,25 @@ export const TITLE_DEFAULTS: Required<TitleSettings> = {
   backgroundColor: 'var(--dsw-alias-bg-layer-3)',
   fontSize: 22,
   position: 'above-new-session',
+  workspaceEnabled: true,
+  workspaceMode: 'auto',
+  workspaceText: '',
+  workspaceFontSize: 20,
+  workspacePosition: 'right',
 }
+
+/** Workspace-name source choices in display order (the card's select). */
+export const WORKSPACE_MODE_CHOICES: readonly WorkspaceMode[] = [
+  'auto',
+  'manual',
+]
+
+/** Workspace-name placement choices in display order (the card's select). */
+export const WORKSPACE_POSITION_CHOICES: readonly WorkspacePosition[] = [
+  'left',
+  'right',
+  'below',
+]
 
 /** Position choices in display order (the card's select). */
 export const POSITION_CHOICES: readonly TitlePosition[] = [

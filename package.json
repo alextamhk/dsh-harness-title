@@ -1,7 +1,11 @@
 {
   "name": "harness-title",
   "description": "DSH web plugin: shows a customizable Name Title on the harness GUI so you can tell which machine's Harness instance you are using",
-  "version": "0.1.0",
+  "version": "0.3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alextamhk/dsh-harness-title.git"
+  },
   "type": "module",
   "engines": {
     "node": "^22.19.0 || >=24.0.0"

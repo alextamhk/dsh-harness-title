@@ -27,6 +27,16 @@ export interface TitleSettingsCardState extends CardShell {
     fontSize: CardFieldState;
     /** Display position. */
     position: CardFieldState;
+    /** Workspace-name switch. */
+    workspaceEnabled: CardFieldState;
+    /** Workspace-name source (auto / manual). */
+    workspaceMode: CardFieldState;
+    /** Workspace name text. */
+    workspaceText: CardFieldState;
+    /** Workspace-name font size px. */
+    workspaceFontSize: CardFieldState;
+    /** Workspace-name placement (left / right / below the title). */
+    workspacePosition: CardFieldState;
 }
 /** The registration-side face the card's slot entry injects. */
 export interface TitleSettingsCardFace extends CardActions {

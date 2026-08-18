@@ -7,9 +7,9 @@
  * two field sets share one source of truth for shapes.
  * @module harness-title/client/settings
  */
-import type { TitlePosition, TitleSettings } from '../settings.ts';
+import type { TitlePosition, TitleSettings, WorkspaceMode, WorkspacePosition } from '../settings.ts';
 import type { TitleKey } from './locales.ts';
-export type { TitlePosition, TitleSettings };
+export type { TitlePosition, TitleSettings, WorkspaceMode, WorkspacePosition };
 /** Settings namespace bound by the client scope (host registers it). */
 export declare const TITLE_NS = "harness-title";
 /** Font size bounds shown by the card's number field. */
@@ -17,6 +17,10 @@ export declare const FONT_SIZE_MIN = 10;
 export declare const FONT_SIZE_MAX = 72;
 /** Effective display settings when the namespace is not ready yet. */
 export declare const TITLE_DEFAULTS: Required<TitleSettings>;
+/** Workspace-name source choices in display order (the card's select). */
+export declare const WORKSPACE_MODE_CHOICES: readonly WorkspaceMode[];
+/** Workspace-name placement choices in display order (the card's select). */
+export declare const WORKSPACE_POSITION_CHOICES: readonly WorkspacePosition[];
 /** Position choices in display order (the card's select). */
 export declare const POSITION_CHOICES: readonly TitlePosition[];
 /** One selectable color swatch. */

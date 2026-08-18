@@ -20,6 +20,34 @@ export const FONT_SIZE_MAX = 72
 /** Default display font size in px. */
 export const FONT_SIZE_DEFAULT = 22
 
+/** Default workspace-name font size in px (smaller than the title). */
+export const WORKSPACE_FONT_SIZE_DEFAULT = 20
+
+/** Workspace-name placements relative to the title text. */
+export const WORKSPACE_POSITIONS = [
+  'left',
+  'right',
+  'below',
+] as const
+
+/** One workspace-name placement key. */
+export type WorkspacePosition = (typeof WORKSPACE_POSITIONS)[number]
+
+/** The default placement (right of the title, like `TITLE [workspace]`). */
+export const WORKSPACE_POSITION_DEFAULT: WorkspacePosition = 'right'
+
+/** Workspace-name sources: follow the current DSH workspace, or a fixed manual text. */
+export const WORKSPACE_MODES = [
+  'auto',
+  'manual',
+] as const
+
+/** One workspace-name source key. */
+export type WorkspaceMode = (typeof WORKSPACE_MODES)[number]
+
+/** The default source: follow the current workspace. */
+export const WORKSPACE_MODE_DEFAULT: WorkspaceMode = 'auto'
+
 /** Display positions; `above-new-session` is the user-approved default. */
 export const POSITIONS = [
   'above-new-session',
@@ -59,6 +87,16 @@ export interface TitleSettings {
   fontSize?: number
   /** Display position. */
   position?: TitlePosition
+  /** Workspace-name switch; off hides the bracketed workspace part. */
+  workspaceEnabled?: boolean
+  /** Workspace-name source: auto (current workspace) or manual (workspaceText). */
+  workspaceMode?: WorkspaceMode
+  /** Workspace name text (used by the manual source); empty string hides the bracketed part. */
+  workspaceText?: string
+  /** Workspace-name font size in px, 10–72 (independent of fontSize). */
+  workspaceFontSize?: number
+  /** Workspace-name placement relative to the title: left / right / below. */
+  workspacePosition?: WorkspacePosition
 }
 
 /** Schemastery schema for the namespace (defaults resolve empty user layers). */
@@ -69,4 +107,9 @@ export const TitleSettingsSchema = z.object({
   backgroundColor: z.string().default(BACKGROUND_COLOR_DEFAULT),
   fontSize: z.number().step(1).min(FONT_SIZE_MIN).max(FONT_SIZE_MAX).default(FONT_SIZE_DEFAULT),
   position: z.union([...POSITIONS]).default(POSITION_DEFAULT),
+  workspaceEnabled: z.boolean().default(true),
+  workspaceMode: z.union([...WORKSPACE_MODES]).default(WORKSPACE_MODE_DEFAULT),
+  workspaceText: z.string().default(''),
+  workspaceFontSize: z.number().step(1).min(FONT_SIZE_MIN).max(FONT_SIZE_MAX).default(WORKSPACE_FONT_SIZE_DEFAULT),
+  workspacePosition: z.union([...WORKSPACE_POSITIONS]).default(WORKSPACE_POSITION_DEFAULT),
 })

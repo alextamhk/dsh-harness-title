@@ -6,15 +6,17 @@
  * profile in ~/.dsh/settings.yaml (one file per machine → each machine names
  * its own Harness instance).
  *
- * The composition base defaults `text` to the machine hostname, so a fresh
- * install already identifies the machine out of the box; the user can
- * override it (or anything else) from the Settings page.
+ * The composition base defaults `text` to the machine hostname and
+ * `workspaceText` to the host process's working-directory name, so a fresh
+ * install already identifies the machine (and its workspace) out of the box;
+ * the user can override either (or anything else) from the Settings page.
  * @module harness-title
  */
 
 import { Context } from '@deepseek-ai/cordis'
 import { installSettingsSection, settingsNamespace } from '@deepseek-ai/dsh-settings'
 import os from 'node:os'
+import path from 'node:path'
 import {
   BACKGROUND_COLOR_DEFAULT,
   COLOR_DEFAULT,
@@ -22,6 +24,9 @@ import {
   POSITION_DEFAULT,
   TITLE_NS,
   TitleSettingsSchema,
+  WORKSPACE_FONT_SIZE_DEFAULT,
+  WORKSPACE_MODE_DEFAULT,
+  WORKSPACE_POSITION_DEFAULT,
   type TitleSettings,
 } from './settings.ts'
 
@@ -40,6 +45,11 @@ export function apply(ctx: Context): void {
     backgroundColor: BACKGROUND_COLOR_DEFAULT,
     fontSize: FONT_SIZE_DEFAULT,
     position: POSITION_DEFAULT,
+    workspaceEnabled: true,
+    workspaceMode: WORKSPACE_MODE_DEFAULT,
+    workspaceText: path.basename(process.cwd()),
+    workspaceFontSize: WORKSPACE_FONT_SIZE_DEFAULT,
+    workspacePosition: WORKSPACE_POSITION_DEFAULT,
   }
   let current: () => TitleSettings = () => base
   installSettingsSection<TitleSettings>(

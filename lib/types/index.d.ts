@@ -6,9 +6,10 @@
  * profile in ~/.dsh/settings.yaml (one file per machine → each machine names
  * its own Harness instance).
  *
- * The composition base defaults `text` to the machine hostname, so a fresh
- * install already identifies the machine out of the box; the user can
- * override it (or anything else) from the Settings page.
+ * The composition base defaults `text` to the machine hostname and
+ * `workspaceText` to the host process's working-directory name, so a fresh
+ * install already identifies the machine (and its workspace) out of the box;
+ * the user can override either (or anything else) from the Settings page.
  * @module harness-title
  */
 import { Context } from '@deepseek-ai/cordis';
