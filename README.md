@@ -9,7 +9,7 @@
 
 ## 效果預覽
 
-<img src="assets/title-badge.png" width="320" alt="右上角標題效果">
+<img src="assets/title-badge.png" width="1280" alt="右上角標題效果">
 
 <img src="assets/settings-card.png" width="480" alt="設定頁卡片（十款預設色 + 自訂）">
 
